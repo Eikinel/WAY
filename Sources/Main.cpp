@@ -7,7 +7,7 @@ int		main()
 {
 	sf::RenderWindow	window(sf::VideoMode(
 		sf::VideoMode::getDesktopMode().width / 1.25f, sf::VideoMode::getDesktopMode().height / 1.25f),
-		GAME_NAME,
+		GAME_NAME" - Where are you?",
 		sf::Style::Close);
 
 	// Pushing screens to the stack

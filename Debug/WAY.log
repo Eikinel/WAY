@@ -1,0 +1,20 @@
+﻿  Main.cpp
+c:\users\eikinel\documents\projets\way\sources\main.cpp(8): warning C4244: 'argument' : conversion de 'float' en 'unsigned int', perte possible de données
+c:\users\eikinel\documents\projets\way\sources\main.cpp(18): warning C4018: '<' : incompatibilité signed/unsigned
+  Event.cpp
+c:\users\eikinel\documents\projets\way\includes\collider.h(61): warning C4244: 'argument' : conversion de 'int' en 'float', perte possible de données
+c:\users\eikinel\documents\projets\way\sources\event.cpp(72): warning C4244: 'argument' : conversion de 'int' en 'float', perte possible de données
+  Génération de code en cours...
+  Compilation en cours...
+  Screen.cpp
+c:\users\eikinel\documents\projets\way\sources\screen.cpp(18): warning C4244: 'argument' : conversion de 'float' en 'unsigned int', perte possible de données
+c:\users\eikinel\documents\projets\way\sources\screen.cpp(36): warning C4244: 'argument' : conversion de 'float' en 'const ::size_t', perte possible de données
+c:\users\eikinel\documents\projets\way\sources\screen.cpp(39): warning C4244: 'argument' : conversion de 'float' en 'const ::size_t', perte possible de données
+c:\users\eikinel\documents\projets\way\sources\screen.cpp(42): warning C4244: 'argument' : conversion de 'float' en 'const ::size_t', perte possible de données
+c:\users\eikinel\documents\projets\way\sources\screen.cpp(45): warning C4244: 'argument' : conversion de 'float' en 'const ::size_t', perte possible de données
+  Button.cpp
+c:\users\eikinel\documents\projets\way\includes\collider.h(61): warning C4244: 'argument' : conversion de 'int' en 'float', perte possible de données
+  Génération de code en cours...
+c:\users\eikinel\documents\projets\way\sources\button.cpp(87): warning C4715: 'Button::triggerEvent' : les chemins de contrôle ne retournent pas tous une valeur
+  WAY.vcxproj -> C:\Users\Eikinel\Documents\Projets\WAY\Debug\WAY.exe
+  WAY.vcxproj -> C:\Users\Eikinel\Documents\Projets\WAY\Debug\WAY.pdb (Partial PDB)

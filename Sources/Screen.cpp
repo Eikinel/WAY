@@ -1,7 +1,6 @@
 #include "Screen.h"
 #include "Event.h"
 #include "Button.h"
-#include "Skin.h"
 
 
 //CONSTRUCTORS
@@ -12,8 +11,8 @@ IScreen::IScreen(sf::RenderWindow& window, eGamestate state) : _window(window), 
 	this->_index = all_screens.size();
 	this->_frame_limiter = 120;
 	this->_fps = 0.f;
-	if (!this->_main_font.loadFromFile(FONTS_DIR"/Meatloaf Sketched.ttf"))
-		std::cerr << "Failed to load font " << FONTS_DIR"/Meatloaf Sketched.ttf" << std::endl;
+	if (!this->_main_font.loadFromFile(FONTS_DIR"/Madness Hyperactive.otf"))
+		std::cerr << "Failed to load font " << FONTS_DIR"/Madness Hyperactive.otf" << std::endl;
 	this->_window.setFramerateLimit(this->_frame_limiter);
 	this->_fps_text.setFont(this->_main_font);
 	this->_fps_text.setCharacterSize(win_size.y / 25.f);
@@ -54,29 +53,10 @@ GameScreen::GameScreen(sf::RenderWindow& window) :  IScreen(window, GAME)
 	std::cout << std::endl << "Creating game screen" << std::endl;
 	this->_events.push_back(new WindowDefaultEvent); // Event handler for options, close window, etc.
 	this->_events.push_back(new GameEvent); // Update game, draw it and react in terms of user inputs.
-	this->_window.setKeyRepeatEnabled(false);
+	this->_window.setKeyRepeatEnabled(true);
 
 	sf::Vector2f		win_size(window.getSize());
-	sf::VertexArray		va_tmp(sf::LinesStrip, 2);
 
-	va_tmp[0].color = va_tmp[1].color = sf::Color::Green;
-	va_tmp[0].position = sf::Vector2f(win_size.x / 2.f, 0);
-	va_tmp[1].position = sf::Vector2f(win_size.x / 2.f, win_size.y);
-	this->_cross.push_back(va_tmp);
-	va_tmp[0].position = sf::Vector2f(0, win_size.y / 2.f);
-	va_tmp[1].position = sf::Vector2f(win_size.x, win_size.y / 2.f);
-	this->_cross.push_back(va_tmp);
-	this->_speed = 10;
-	this->_accuracy_ratio[eAccuracy::ACC_MISS] = 0.f;
-	this->_accuracy_ratio[eAccuracy::ACC_BAD] = 0.3334f;
-	this->_accuracy_ratio[eAccuracy::ACC_GOOD] = 0.6667f;
-	this->_accuracy_ratio[eAccuracy::ACC_GREAT] = 1.f;
-	this->_skin = new Skin();
-	this->_cursor.setTexture(this->_skin->getComponent(eSkinComponent::SK_CURSOR));
-	this->_cursor.setOrigin(sf::Vector2f(
-		this->_cursor.getGlobalBounds().width / 2.f,
-		this->_cursor.getGlobalBounds().height / 2.f));
-	this->_cursor.setPosition(sf::Vector2f(win_size.x / 2.f, win_size.y / 2.f));
 	this->restart();
 }
 
@@ -97,7 +77,6 @@ MenuScreen::~MenuScreen()
 GameScreen::~GameScreen()
 {
 	std::cout << "Deleting game screen" << std::endl;
-	delete(this->_skin);
 }
 
 
@@ -149,78 +128,6 @@ std::vector<Button *>&	MenuScreen::getButtons()
 }
 
 
-const std::vector<Note *>&	GameScreen::getNotes() const
-{
-	return (this->_notes);
-}
-
-const std::vector<Note *>	GameScreen::getNextNotes(const sf::Time& time) const
-{
-	std::vector<Note *>		next_notes;
-
-	for (auto it : this->_notes)
-	{
-		if ((it->getTime().asSeconds() - time.asSeconds()) < MAX_TIMING_VIEW / this->_speed)
-			next_notes.push_back(it);
-		else
-			break;
-	}
-
-	return (next_notes);
-}
-
-const std::vector<Note *>	GameScreen::getNotesWithSameTiming(const sf::Time& time, const float& length) const
-{
-	std::vector<Note *>		same_timing;
-
-	for (auto it : this->_notes)
-		if (it->getTime().asSeconds() >= time.asSeconds() && it->getTime().asSeconds() <= length)
-			same_timing.push_back(it);
-
-	return (same_timing);
-}
-
-const Note&	GameScreen::getNoteByIndex(unsigned int index) const
-{
-	return (*this->_notes[index]);
-}
-
-const unsigned int	GameScreen::getNotesSize() const
-{
-	return (this->_notes_size);
-}
-
-const std::vector<sf::VertexArray>&	GameScreen::getCross() const
-{
-	return (this->_cross);
-}
-
-const unsigned int	GameScreen::getSpeed() const
-{
-	return (this->_speed);
-}
-
-const float	GameScreen::getUserAccuracy() const
-{
-	return (this->_user_accuracy);
-}
-
-const Skin&	GameScreen::getSkin() const
-{
-	return (*this->_skin);
-}
-
-const sf::Sprite&	GameScreen::getCursor() const
-{
-	return (this->_cursor);
-}
-
-const sf::Sprite&	GameScreen::getSpriteAccuracy() const
-{
-	return (this->_sprite_accuracy);
-}
-
-
 //SETTERS
 void	IScreen::updateFPS()
 {
@@ -241,56 +148,6 @@ void	IScreen::updateFPS()
 void	IScreen::setFrameLimiter(const unsigned int frame_limiter)
 {
 	this->_frame_limiter = frame_limiter;
-}
-
-void	GameScreen::removeNote(const Note& note)
-{
-	for (auto it = this->_notes.begin(); it != this->_notes.end(); ++it)
-	{
-		if (**it == note)
-		{
-			delete (*it);
-			this->_notes.erase(it);
-			std::cout << "Note deleted" << std::endl;
-			return;
-		}
-	}
-	std::cerr << "Note not found" << std::endl;
-}
-
-void	GameScreen::addSpeed(const int offset)
-{
-	if (this->_speed + offset > 0 && this->_speed < MAX_SPEED)
-	{
-		std::cout << "Changing speed to " << this->_speed + offset << std::endl;
-		this->_speed += offset;
-	}
-	else
-		std::cerr << "Can't change speed : floor or ceiling reached" << std::endl;
-}
-
-void	GameScreen::setSpriteAccuracy(const eAccuracy accuracy)
-{
-	this->_sprite_accuracy.setTexture(this->_skin->getComponent((eSkinComponent)(accuracy + eSkinComponent::SK_MISS)));
-	this->_sprite_accuracy.setOrigin(sf::Vector2f(
-		this->_sprite_accuracy.getGlobalBounds().width / 2.f,
-		this->_sprite_accuracy.getGlobalBounds().height / 2.f));
-	this->_sprite_accuracy.setPosition(sf::Vector2f(
-		this->_window.getSize().x / 2.f,
-		this->_window.getSize().y / 2.f - this->_cursor.getGlobalBounds().height * 1.5f));
-}
-
-void	GameScreen::setUserAccuracy(const eAccuracy accuracy, std::vector<eAccuracy>& notes_played)
-{
-	this->_current_accuracy += this->_accuracy_ratio[notes_played[notes_played.size() - 1]];
-	this->_user_accuracy = (this->_current_accuracy / notes_played.size()) * 100.f;
-}
-
-void	GameScreen::setAccuracy(const eAccuracy accuracy, std::vector<eAccuracy>& notes_played)
-{
-	notes_played.push_back(accuracy);
-	this->setSpriteAccuracy(accuracy);
-	this->setUserAccuracy(accuracy, notes_played);
 }
 
 
@@ -354,35 +211,5 @@ int		GameScreen::run()
 
 void	GameScreen::restart()
 {
-	std::vector<const sf::Texture *>	textures;
-
-	textures.push_back(&this->_skin->getComponent(eSkinComponent::SK_NOTE));
-	textures.push_back(&this->_skin->getComponent(eSkinComponent::SK_NOTE_OUTLINE));
-	textures.push_back(&this->_skin->getComponent(eSkinComponent::SK_LN_BEGIN));
-	textures.push_back(&this->_skin->getComponent(eSkinComponent::SK_LN_OUTLINE_BEGIN));
-	textures.push_back(&this->_skin->getComponent(eSkinComponent::SK_LN));
-	textures.push_back(&this->_skin->getComponent(eSkinComponent::SK_LN_OUTLINE));
-	textures.push_back(&this->_skin->getComponent(eSkinComponent::SK_LN_END));
-	textures.push_back(&this->_skin->getComponent(eSkinComponent::SK_LN_OUTLINE_END));
-
 	std::cout << "Restarting game" << std::endl;
-
-	for (auto it = this->_notes.begin(); it != this->_notes.end();)
-	{
-		delete(*it);
-		it = this->_notes.erase(it);
-	}
-
-	this->_user_accuracy = 100.f;
-	this->_current_accuracy = 0.f;
-	this->_notes.push_back(new Note(sf::seconds(1.f), 0.1f, sf::Vector2i(-1, 0), textures, this->_speed));
-	this->_notes.push_back(new Note(sf::seconds(2.f), 0.2f, sf::Vector2i(-1, 0), textures, this->_speed));
-	this->_notes.push_back(new Note(sf::seconds(3.f), 0.5f, sf::Vector2i(-1, 0), textures, this->_speed));
-	this->_notes.push_back(new Note(sf::seconds(4.f), 1.f, sf::Vector2i(-1, 0), textures, this->_speed));
-	this->_notes.push_back(new Note(sf::seconds(5.f), 0.1f, sf::Vector2i(0, 1), textures, this->_speed));
-	this->_notes.push_back(new Note(sf::seconds(6.f), 0.2f, sf::Vector2i(0, 1), textures, this->_speed));
-	this->_notes.push_back(new Note(sf::seconds(7.f), 0.5f, sf::Vector2i(0, 1), textures, this->_speed));
-	this->_notes.push_back(new Note(sf::seconds(8.f), 1.f, sf::Vector2i(0, 1), textures, this->_speed));
-	this->_notes_size = this->_notes.size();
-	this->_sprite_accuracy = sf::Sprite();
 }

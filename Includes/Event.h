@@ -4,9 +4,7 @@
 # include "Entity.h"
 
 enum	eGamestate;
-enum	eAccuracy;
 class	IScreen;
-class	Note;
 
 class				IEvent
 {
@@ -81,28 +79,5 @@ public:
 	virtual void	draw(IScreen& screen);
 
 protected:
-	sf::Clock					_game_clock;
-	std::vector<Note *>			_next_notes;
-	std::vector<sf::Vector2f>	_timing_gaps;
-	std::vector<eAccuracy>		_notes_played;
-
-	//GETTERS
-	const eAccuracy		getAccuracy(const sf::Time& delta) const;
+	sf::Clock		_game_clock;
 };
-
-class				GuardEvent : public GameEvent
-{
-public:
-	GuardEvent();
-
-	virtual int		update(IScreen& screen, sf::Event& event);
-	virtual void	draw(IScreen& screen);
-
-private:
-	
-
-	//GETTERS
-	const eAccuracy		getAccuracy(const sf::Time& delta) const;
-};
-
-std::string	setPrecision(float value, unsigned int precision);

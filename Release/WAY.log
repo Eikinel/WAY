@@ -1,0 +1,20 @@
+﻿  Button.cpp
+C:\Users\Eikinel\Documents\Projets\WAY\Includes\Collider.h(61): warning C4244: 'argument' : conversion de 'int' en 'float', perte possible de données
+  Event.cpp
+C:\Users\Eikinel\Documents\Projets\WAY\Includes\Collider.h(61): warning C4244: 'argument' : conversion de 'int' en 'float', perte possible de données
+Sources\Event.cpp(72): warning C4244: 'argument' : conversion de 'int' en 'float', perte possible de données
+  Main.cpp
+Sources\Main.cpp(8): warning C4244: 'argument' : conversion de 'float' en 'unsigned int', perte possible de données
+Sources\Main.cpp(18): warning C4018: '<' : incompatibilité signed/unsigned
+  Screen.cpp
+Sources\Screen.cpp(18): warning C4244: 'argument' : conversion de 'float' en 'unsigned int', perte possible de données
+Sources\Screen.cpp(36): warning C4244: 'argument' : conversion de 'float' en 'const ::size_t', perte possible de données
+Sources\Screen.cpp(39): warning C4244: 'argument' : conversion de 'float' en 'const ::size_t', perte possible de données
+Sources\Screen.cpp(42): warning C4244: 'argument' : conversion de 'float' en 'const ::size_t', perte possible de données
+Sources\Screen.cpp(45): warning C4244: 'argument' : conversion de 'float' en 'const ::size_t', perte possible de données
+  Génération de code en cours
+c:\users\eikinel\documents\projets\way\sources\button.cpp(87): warning C4715: 'Button::triggerEvent' : les chemins de contrôle ne retournent pas tous une valeur
+  Fin de la génération du code
+  All 734 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  WAY.vcxproj -> C:\Users\Eikinel\Documents\Projets\WAY\Release\WAY.exe
+  WAY.vcxproj -> C:\Users\Eikinel\Documents\Projets\WAY\Release\WAY.pdb (Full PDB)

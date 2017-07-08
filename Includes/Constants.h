@@ -5,14 +5,10 @@
 # include <iostream>
 
 // Directories
-# define ASSETS_DIR		"../Assets"
+# define ASSETS_DIR		"./Assets"
 # define FONTS_DIR		ASSETS_DIR"/Fonts"
-# define SKIN_DIR		ASSETS_DIR"/Skin"
 
-# define GAME_NAME	"Morse"
-
-# define MAX_SPEED			100
-# define MAX_TIMING_VIEW	10.f
+# define GAME_NAME	"W . A . Y"
 
 // Global variable for screens, containing menu, game, etc.
 class IScreen;

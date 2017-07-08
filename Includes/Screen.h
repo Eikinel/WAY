@@ -1,12 +1,9 @@
 #pragma once
 
 # include "Constants.h"
-# include "Note.h"
 
 class IEvent;
 class Button;
-class Note;
-class Skin;
 class IGameEvent;
 
 enum				eGamestate
@@ -74,39 +71,7 @@ public:
 	GameScreen(sf::RenderWindow& window);
 	virtual ~GameScreen();
 
-	//GETTERS
-	const std::vector<Note *>&			getNotes() const;
-	const std::vector<Note *>			getNextNotes(const sf::Time& time) const;
-	const std::vector<Note *>			getNotesWithSameTiming(const sf::Time& time, const float& length) const;
-	const Note&							getNoteByIndex(unsigned int index) const;
-	const unsigned int					getNotesSize() const;
-	const std::vector<sf::VertexArray>&	getCross() const;
-	const unsigned int					getSpeed() const;
-	const float							getUserAccuracy() const;
-	const Skin&							getSkin() const;
-	const sf::Sprite&					getCursor() const;
-	const sf::Sprite&					getSpriteAccuracy() const;
-
-	//SETTERS
-	void	removeNote(const Note& note);
-	void	addSpeed(const int offset);
-	void	setSpriteAccuracy(const eAccuracy accuracy);
-	void	setUserAccuracy(const eAccuracy accuracy, std::vector<eAccuracy>& notes_played);
-	void	setAccuracy(const eAccuracy accuracy, std::vector<eAccuracy>& notes_played);
-
 	//METHODS
 	virtual int		run();
 	void			restart();
-
-protected:
-	std::vector<Note *>				_notes; // Map file with all notes will be here
-	unsigned int					_notes_size;
-	std::vector<sf::VertexArray>	_cross;
-	unsigned int					_speed;
-	float							_user_accuracy;
-	float							_current_accuracy;
-	float							_accuracy_ratio[eAccuracy::ACC_SIZE];
-	Skin*							_skin;
-	sf::Sprite						_cursor;
-	sf::Sprite						_sprite_accuracy;
 };
